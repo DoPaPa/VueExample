@@ -1,0 +1,60 @@
+.arguments {
+  width: 1200px;
+  margin: 0 auto;
+}
+.wait section, .hot section, .latest section {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  border-bottom: 1px solid #e6e6e6;
+  position: relative;
+  .result {
+    margin-left: 20px;
+    .ok {
+      color: #67C23A;
+    }
+    .no {
+      color: #E6A23C;
+    }
+  }
+  .scan {
+    color: #999;
+    p {
+      font-size: 14px;
+      margin: 0 20px;
+    }
+  }
+  .main {
+    p {
+      color: #999;
+      font-size: 12px;
+      .comment {
+        margin-left: 15px;
+      }
+    }
+    h2 {
+      font-size: 16px;
+      font-weight: normal;
+      color: #333;
+    }
+  }
+  .block {
+    position: absolute;
+    right: 0;
+    .demonstration {
+      font-size: 12px;
+    }
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .arguments {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  section .block {
+    display: none;
+  }
+}

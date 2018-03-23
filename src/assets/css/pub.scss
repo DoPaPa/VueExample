@@ -1,0 +1,104 @@
+.el-header.pub {
+  padding: 0;
+  width: 1200px;
+  margin: 0 auto 30px;
+  color: #333;
+  border-bottom: 1px solid #e6e6e6;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .user {
+    .signin {
+      margin-right: 20px;
+    }
+  }    
+}
+
+// 用户中心
+.userCenter-signup, .userCenter-signin{
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: rgba(51, 51, 51, .6);
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  form {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    width: 400px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    h3 {
+      text-align: center;
+      letter-spacing: 15px;
+    }
+    i {
+      font-size: 18px;
+      cursor: pointer;
+      float: right;
+    }
+  }  
+}
+.userCenter-signup.active, .userCenter-signin.active {
+  display: block;
+}
+
+@media only screen and (max-width: 1200px) {
+  .el-header.pub {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 992px){
+  .search {
+      display: none!important;
+    }
+}
+
+@media only screen and (max-width: 768px){
+  .user {
+      display: none!important;
+    }
+}
+
+@media only screen and (max-width: 600px){
+  .el-header.pub {
+    text-align: center;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: auto!important;
+    .grid-content {
+      width: 100%;
+    }
+    ul {
+      display: flex;
+      border-bottom: 0 none
+    }
+    .el-menu--horizontal>.el-menu-item {
+      width: 100%!important;
+      padding: 0!important;
+      height: 40px;
+      line-height: 40px!important;
+    }
+  }
+  
+  .userCenter {
+    box-sizing: border-box;
+    padding: 0 20px!important;
+    form{
+      width: 80%;
+    }
+  }
+}
+
+
+
+  
