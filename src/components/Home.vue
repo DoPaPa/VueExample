@@ -114,7 +114,7 @@
         </swiper>
     </div>
     <div class="articles">
-       <section>
+       <!-- <section>
           <div class="info">
             <div class="avatar"><img src="../assets/IMAGES/bg-1.jpg" alt=""></div>
             <div class="details">
@@ -126,18 +126,22 @@
             <h1><a href="">谈谈你对Vue和React在理解</a> </h1>
             <p>不知道，没学会，也没用过，你出的题太难了，要不你问个简单点的……</p>
           </div>
-      </section>
-       <section>
+      </section> -->
+       <section v-for="(item, index) in articles" :key="index">
           <div class="info">
-            <div class="avatar"><img src="../assets/IMAGES/bg-1.jpg" alt=""></div>
+            <div class="avatar"><img src="http://localhost:8080/public/img/defaultAvatar.jpg" alt=""></div>
             <div class="details">
-            <p>作者： <span>李立强</span></p>
-            <p>分类： <span>前端</span></p>
+            <p>作者： <span>{{item.username}}</span></p>
+            <p>分类： <span>{{item.category}}</span></p>
             </div>
           </div>
           <div class="article">
-            <h1><a href="">谈谈你对Vue和React在理解</a> </h1>
-            <p>不知道，没学会，也没用过，你出的题太难了，要不你问个简单点的……</p>
+            <h1>
+              <router-link tag="a" :to="{name: 'articledetails', query: {ID:item.id, autherId:item.autherid}}">
+                {{item.title}}
+              </router-link>              
+            </h1>
+            <!-- <p>{{item.content}}</p> -->
           </div>
       </section>
     </div>
@@ -160,6 +164,7 @@
 <script>
 import '../assets/css/home.scss'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
+import io from 'socket.io-client'
 export default {
   data () {
     return {
@@ -180,7 +185,9 @@ export default {
           el: '.swiper-pagination',
           clickable: true
         }
-      }
+      },
+      // 首页收据
+      articles: []
     }
   },
   methods: {
@@ -199,6 +206,19 @@ export default {
     swiper () {
       return this.$refs.mySwiper.swiper
     }
+  },
+  created () {
+    // 获取首页收据
+    this.$axios.get('/article')
+      .then(res => {
+        this.articles = res.data.articles
+        console.log(this.articles)
+      })
+
+    const socket = io('ws://localhost:8080')
+    socket.on('connect', () => {
+      console.log('已连接')
+    })
   },
   mounted () {
     // 这边就可以使用swiper这个对象去使用swiper官网中的那些方法

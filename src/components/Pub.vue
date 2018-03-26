@@ -109,8 +109,11 @@ export default {
           break
         case 5:
           this.$router.push({name: 'hot'})
+          break
       }
     },
+
+    // 用户注册
     submitSignup () {
       this.$axios.post('/signup', this.userToSignup)
         .then(res => {
@@ -120,10 +123,15 @@ export default {
           }
         })
     },
+
+    // 用户登录
     submitSignin () {
-      this.$axios.post('/signin', this.userToSignip)
+      this.$axios.post('/signin', this.userToSignin)
         .then(res => {
-          console.log(res.data)
+          if (res.data.status === 0) {
+            this.$router.push({name: 'home'})
+            this.isSignin = false
+          }
         })
     },
     resetForm (formName) {

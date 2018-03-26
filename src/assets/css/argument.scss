@@ -1,6 +1,31 @@
 .arguments {
   width: 1200px;
   margin: 0 auto;
+  #pane-4 {
+    .question {
+      .category {
+        margin-top: 15px;
+      }
+      .myEditor {
+        margin: 15px 0;
+        height: auto;
+        .quill-editor-example {
+          height: auto;
+          .quill-editor {
+            height: auto;
+            .ql-container.ql-snow {
+              height: 400px;
+            }
+          }
+        }
+      }     
+      .submit {
+        button {
+          float: right;
+        }
+      }
+    }
+  }
 }
 .wait section, .hot section, .latest section {
   display: flex;

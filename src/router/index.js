@@ -3,9 +3,11 @@ import Router from 'vue-router'
 import Pub from '@/components/Pub'
 import Home from '@/components/Home'
 import AddArticle from '@/components/Article/addArticle'
-import Argument from '../components/Argument'
+import Argument from '../components/Argument/Argument'
 import Technology from '../components/Technology'
 import Hot from '../components/Hot'
+import articleDetails from '../components/Article/details.vue'
+import argumentDetails from '../components/Argument/details.vue'
 
 Vue.use(Router)
 export default new Router({
@@ -45,6 +47,16 @@ export default new Router({
           name: 'hot',
           path: 'hot',
           component: Hot
+        },
+        {
+          name: 'articledetails',
+          path: '/articledetails',
+          component: articleDetails
+        },
+        {
+          name: 'argumentdetails',
+          path: '/argumentdetails',
+          component: argumentDetails
         }
       ]
     }

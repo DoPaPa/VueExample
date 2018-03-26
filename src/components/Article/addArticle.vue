@@ -1,71 +1,83 @@
 <template>
-  <div>
-    <el-container>
-      <el-main style="padding: 0;">
-        <el-form ref="form" :model="ruleForm" label-position="left" label-width="80px" size="medium">
-        <div style="line-height: normal">
-          <el-input placeholder="请输入内容" v-model="title">
-            <template slot="prepend">文章标题：</template>
-          </el-input>
-        </div>
-        <div class="category" style="display: flex">
-          <el-form-item  prop="region">
-            <el-select style="margin: 0" v-model="ruleForm.region" placeholder="文章分类">
-              <el-option label="前端" value="front"></el-option>
-              <el-option label="后端" value="end"></el-option>
-              <el-option label="服务器" value="database"></el-option>
-              <el-option label="数据库" value="server"></el-option>
-            </el-select>
-          </el-form-item>
-        </div>
-          <VmMarkdown theme="default" 
-          width="100%" 
-          height="100%" 
-          v-on:gethtml="showHtml"
-         >
-        </VmMarkdown>
-        </el-form>
-
-    
-      </el-main>
-      <el-footer>
-        <div>
-          <el-checkbox >同步到微博</el-checkbox>
-          <el-checkbox >版权声明</el-checkbox>
-        </div>
-        <div>
-          <el-button type="success">发布文章</el-button>
-        </div>
-      </el-footer>
-    </el-container>
+<div class="pub">
+  <!-- 标题 -->
+  <div class="caption">
+    <div>
+      <el-input placeholder="请输入标题" v-model="article.title">
+        <template slot="prepend">标&emsp;题</template>
+      </el-input>
+    </div>
   </div>
+  <!-- 分类 -->
+  <div class="category">
+    <div class="">
+      <el-select v-model="article.category" placeholder="请选择">
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
+      </el-select>
+    </div>
+  </div>
+  <!-- 富文本编辑器 -->
+  <div class="myEditor">
+    <myEditor @setContent="getContent"></myEditor>
+  </div>
+  <!-- 提交按钮 -->
+  <div class="submit">
+    <el-button type="primary" @click="sub">发布文章</el-button>
+  </div>
+</div>
 </template>
 <script>
 import '../../assets/css/addarticle.scss'
-import VmMarkdown from 'vm-markdown'
+import Editor from '../editor'
 export default {
-  name: 'editor',
+  components: {
+    'myEditor': Editor
+  },
   data () {
     return {
-      title: '',
-      ruleForm: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
-      }
+      article: {
+        title: '',
+        category: '',
+        content: ''
+      },
+      options: [{
+        value: '前端',
+        label: '前端'
+      }, {
+        value: '后端',
+        label: '后端'
+      }, {
+        value: '服务器',
+        label: '服务器'
+      }, {
+        value: '数据库',
+        label: '数据库'
+      }, {
+        value: '工具',
+        label: '工具'
+      }]
     }
   },
-  components: {
-    VmMarkdown
-  },
   methods: {
-    showHtml (html) {
-      console.log(html)
+    getContent (msg) {
+      this.article.content = msg
+    },
+    sub () {
+      this.$axios.post('/article', this.article)
+        .then((res) => {
+          if (res.data.status === 0) {
+            // console.log('文章发布成功！')
+            window.alert(res.data.msg)
+            this.$router.push({name: 'home'})
+          } else {
+            window.alert(res.data.msg)
+          }
+        })
     }
   }
 }
